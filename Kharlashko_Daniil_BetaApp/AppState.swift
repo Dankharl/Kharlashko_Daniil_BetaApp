@@ -24,29 +24,6 @@ import SwiftUI
 
 //In the AppState, we can hold the User object to store and manage user data globally across the app.
 
-//class AppState: ObservableObject {
-//    @Published var isLoggedIn: Bool {
-//        didSet {
-//            UserDefaults.standard.set(isLoggedIn, forKey: "isLoggedIn")
-//        }
-//    }
-//    
-//    @Published var user: User  // The user's profile information
-//
-//    init() {
-//        self.isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
-//        self.user = User()  // Initialize with empty values or load saved values
-//    }
-//
-//    func logIn() {
-//        isLoggedIn = true
-//    }
-//
-//    func logOut() {
-//        isLoggedIn = false
-//        user = User()  // Clear user information on logout
-//    }
-//}
 
 class AppState: ObservableObject {
     @Published var isLoggedIn: Bool = false
