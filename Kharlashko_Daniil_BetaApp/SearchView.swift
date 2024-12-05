@@ -21,32 +21,60 @@ import MapKit
 struct SearchView: View {
     @EnvironmentObject var appState: AppState
     @State private var searchQuery: String = "" // For search functionality
+    @State private var filterData = FilterData.defaultData // Initialize default
 
+    
+    // Apply filters to the events
     var filteredEvents: [Event] {
-        if searchQuery.isEmpty {
-            return appState.events
-        } else {
-            return appState.events.filter { event in
+        var events = appState.events
+
+        // Apply filters only when filters are set
+        if !filterData.selectedSortOption.isEmpty {
+            switch filterData.selectedSortOption {
+            case "Highest Rating":
+                events.sort { $0.rating > $1.rating }
+            case "Lowest Rating":
+                events.sort { $0.rating < $1.rating }
+            case "Date":
+                events.sort { ($0.dateObject ?? Date()) < ($1.dateObject ?? Date()) }
+            default:
+                break
+            }
+        }
+        
+        // Filter by date range
+        if let startDate = filterData.startDate, let endDate = filterData.endDate {
+            events = events.filter { event in
+                guard let eventDate = event.dateObject else { return false }
+                return eventDate >= startDate && eventDate <= endDate
+            }
+        }
+        
+        // Filter by categories
+        if !filterData.selectedCategories.isEmpty {
+            events = events.filter { event in
+                filterData.selectedCategories.contains(event.category)
+            }
+        }
+
+        // Filter by search query
+        if !searchQuery.isEmpty {
+            events = events.filter { event in
                 event.title.lowercased().contains(searchQuery.lowercased()) ||
                 event.description.lowercased().contains(searchQuery.lowercased()) ||
                 event.location.lowercased().contains(searchQuery.lowercased())
             }
         }
+        return events
     }
+
+        
 
     var body: some View {
         NavigationView {
             VStack {
                 // Header
                 Text("Featured Events")
-//                    .font(.largeTitle)
-//                    .bold()
-//                    .foregroundColor(.white)
-//                    .padding()
-//                    .background(Color("AccentRed")) // AccentRed background
-//                    .cornerRadius(15) // Rounded edges
-//                    .padding(.horizontal) // Ensure alignment within the view
-                
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(.white)
@@ -77,7 +105,7 @@ struct SearchView: View {
                 // Filter and Clear Filter buttons
                 HStack(spacing: 10) {
                     // Filter Button
-                    NavigationLink(destination: FilterView()) {
+                    NavigationLink(destination: FilterView(filterData: $filterData)) {
                         Text("Filter")
                             .font(.headline)
                             .foregroundColor(.white)
@@ -91,6 +119,7 @@ struct SearchView: View {
                     // Clear Filter Button
                     Button(action: {
                         searchQuery = "" // Clear the search query
+                        filterData = FilterData.defaultData // Reset filters
                     }) {
                         Text("Clear Filter")
                             .font(.headline)
@@ -131,6 +160,7 @@ struct SearchView: View {
         }
     }
 }
+
 
 struct EventRow: View {
     let event: Event
@@ -317,17 +347,18 @@ struct DetailView: View {
     }
 }
 
-#Preview {
-    DetailView(event: Event(
-        id: 1,
-        title: "Pixar Putt Returns to Discovery Green",
-        location: "1500 McKinney Street, Houston, TX 77010",
-        time: "Varying times",
-        date: "October 13, 2024 – January 20, 2025",
-        description: "18 fun and interactive holes inspired by Disney and Pixar's films, including Toy Story, Cars, Monsters, Inc., Soul, and more!",
-        imageName: "HoustonGolf",
-        isFavorited: false,
-        rating: 4,
-        coordinate: CLLocationCoordinate2D(latitude: 29.7544, longitude: -95.3700)
-    ))
-}
+
+//#Preview {
+//    DetailView(event: Event(
+//        id: 1,
+//        title: "Pixar Putt Returns to Discovery Green",
+//        location: "1500 McKinney Street, Houston, TX 77010",
+//        time: "Varying times",
+//        date: "October 13, 2024 – January 20, 2025",
+//        description: "18 fun and interactive holes inspired by Disney and Pixar's films, including Toy Story, Cars, Monsters, Inc., Soul, and more!",
+//        imageName: "HoustonGolf",
+//        isFavorited: false,
+//        rating: 4,
+//        coordinate: CLLocationCoordinate2D(latitude: 29.7544, longitude: -95.3700)
+//    ))
+//}

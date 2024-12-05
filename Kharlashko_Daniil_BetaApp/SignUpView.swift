@@ -26,13 +26,15 @@ struct SignUpView: View {
 
     var body: some View {
         ZStack {
-            Color(.darkGray).ignoresSafeArea() // Dark gray background
+//            Color(.darkGray).ignoresSafeArea() // Dark gray background
+            Color("BackgroundWhite").ignoresSafeArea()
 
             VStack(spacing: 20) {
                 // Title
                 Text(isSignUp ? "Sign Up" : "Login")
                     .font(.system(size: 50))
-                    .foregroundColor(.white)
+//                    .foregroundColor(.white)
+                    .foregroundColor(Color("TextGray"))
                     .bold()
                     .padding(.bottom, 20)
 
@@ -167,7 +169,8 @@ struct CustomTextField: View {
         ZStack(alignment: .leading) {
             if text.isEmpty {
                 Text(placeholder)
-                    .foregroundColor(.white.opacity(0.7))
+//                    .foregroundColor(.white.opacity(0.7))
+                    .foregroundColor(Color("TextGray").opacity(0.7))
                     .padding(.leading, 10)
             }
             TextField("", text: $text)
@@ -177,7 +180,8 @@ struct CustomTextField: View {
                 .padding()
                 .background(Color(UIColor.systemBlue).opacity(0.2))
                 .cornerRadius(10)
-                .foregroundColor(.white)
+//                .foregroundColor(.white)
+                .foregroundColor(Color("TextGray"))
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.blue.opacity(0.7), lineWidth: 1)
@@ -194,7 +198,8 @@ struct CustomSecureField: View {
         ZStack(alignment: .leading) {
             if text.isEmpty {
                 Text(placeholder)
-                    .foregroundColor(.white.opacity(0.7))
+//                    .foregroundColor(.white.opacity(0.7))
+                    .foregroundColor(Color("TextGray").opacity(0.7))
                     .padding(.leading, 10)
             }
             SecureField("", text: $text)
@@ -203,7 +208,8 @@ struct CustomSecureField: View {
                 .padding()
                 .background(Color(UIColor.systemBlue).opacity(0.2))
                 .cornerRadius(10)
-                .foregroundColor(.white)
+//                .foregroundColor(.white)
+                .foregroundColor(Color("TextGray"))
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.blue.opacity(0.7), lineWidth: 1)

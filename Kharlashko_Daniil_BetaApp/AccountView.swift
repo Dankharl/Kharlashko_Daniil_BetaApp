@@ -23,7 +23,7 @@ struct AccountView: View {
                             .font(.largeTitle)
                             .bold()
 //                            .foregroundColor(.white)
-                            .foregroundColor(Color("TextGray"))
+                            .foregroundColor(Color("BackgroundWhite"))
                         
                         Spacer()
 
@@ -40,7 +40,8 @@ struct AccountView: View {
                         }
                     }
                     .padding()
-                    .background(Color(.darkGray))
+//                    .background(Color(.darkGray))
+                    .background(Color("BackgroundGray"))
 
                     Divider()
                         .background(Color.white)
@@ -91,13 +92,16 @@ struct SectionView: View {
                 .foregroundColor(.white)
             
             Text(description)
-                .foregroundColor(.white.opacity(0.7))
+//                .foregroundColor(.white.opacity(0.7))
+                .foregroundColor(.white.opacity(1))
             
             Divider()
-                .background(Color.white.opacity(0.5)) // More subtle divider
+//                .background(Color.white.opacity(0.5)) // More subtle divider
+                .background(Color.white.opacity(1)) // More subtle divider
         }
         .padding()
-        .background(Color(UIColor.systemBlue).opacity(0.2)) // Light blue background for each section
+//        .background(Color(UIColor.systemBlue).opacity(0.2))  Light blue background for each section
+        .background(Color("PrimaryBlue").opacity(1)) // Light blue background for each
         .cornerRadius(10)
         .shadow(radius: 5) // Shadow for visual separation
     }
