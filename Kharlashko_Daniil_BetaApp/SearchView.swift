@@ -75,8 +75,7 @@ struct SearchView: View {
             VStack {
                 // Header
                 Text("Featured Events")
-                    .font(.largeTitle)
-                    .bold()
+                    .font(.system(size: 32, weight: .semibold, design: .serif))
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
@@ -87,7 +86,8 @@ struct SearchView: View {
                             endPoint: .bottomTrailing
                         )
                     )
-                    .cornerRadius(15)
+                    .cornerRadius(12) // rounded corners for elegance
+                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 4) // Add a soft shadow
                     .padding(.horizontal)
                 
 
